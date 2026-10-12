@@ -1,24 +1,31 @@
 :root {
-    --crm-primary: #3b82f6;
-    --crm-primary-hover: #2563eb;
-    --crm-primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
+    --crm-black: #000000;
+    --crm-black-hover: #262626;
+    --crm-black-active: #121212;
+    --crm-white: #ffffff;
     --crm-ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-    --crm-accent: #6366f1;
-    --crm-dark: #0f172a;
-    --crm-dark-surface: #1e293b;
+    --crm-ig-pink: #e1306c;
+    --crm-ig-purple: #c13584;
+    --crm-ig-orange: #f77737;
     --crm-sidebar-width: 260px;
-    --crm-bg: #f8fafc;
+    --crm-bg: #fafafa;
     --crm-card-bg: #ffffff;
-    --crm-border: #e2e8f0;
-    --crm-text-main: #0f172a;
-    --crm-text-muted: #64748b;
+    --crm-border: #efefef;
+    --crm-border-strong: #dbdbdb;
+    --crm-text-main: #000000;
+    --crm-text-secondary: #737373;
+    --crm-text-muted: #8e8e8e;
     --crm-success: #10b981;
     --crm-warning: #f59e0b;
-    --crm-danger: #ef4444;
+    --crm-danger: #ed4956;
     --crm-info: #0ea5e9;
-    --crm-purple: #8b5cf6;
-    --crm-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
-    --crm-shadow-hover: 0 12px 30px -4px rgba(15, 23, 42, 0.12);
+    --crm-radius-sm: 8px;
+    --crm-radius-md: 12px;
+    --crm-radius-lg: 18px;
+    --crm-radius-pill: 9999px;
+    --crm-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+    --crm-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.05);
+    --crm-shadow-hover: 0 12px 28px -4px rgba(0, 0, 0, 0.09);
 }
 
 body {
@@ -28,7 +35,8 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.012em;
+    -webkit-font-smoothing: antialiased;
 }
 
 /* App Wrapper & Layout */
@@ -36,44 +44,57 @@ body {
     display: flex;
     min-height: 100vh;
     width: 100%;
+    background-color: var(--crm-bg);
 }
 
-/* Sidebar */
+/* Instagram-Inspired Minimalist Sidebar */
 .crm-sidebar {
     width: var(--crm-sidebar-width);
-    background: #0f172a;
-    color: #f1f5f9;
+    background: #ffffff;
+    color: var(--crm-text-main);
     flex-shrink: 0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid var(--crm-border);
     z-index: 1030;
 }
 
 .crm-sidebar .brand-header {
-    padding: 1.5rem 1.25rem;
-    font-size: 1.25rem;
-    font-weight: 700;
+    padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+    font-size: 1.22rem;
+    font-weight: 800;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: #ffffff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--crm-text-main);
+    border-bottom: 1px solid var(--crm-border);
     text-decoration: none;
+    letter-spacing: -0.03em;
 }
 
 .crm-sidebar .brand-header .brand-icon {
-    width: 40px;
-    height: 40px;
-    background: var(--crm-primary-gradient);
-    border-radius: 12px;
+    width: 38px;
+    height: 38px;
+    background: var(--crm-ig-gradient);
+    border-radius: var(--crm-radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     color: #ffffff;
     font-size: 1.25rem;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+    box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+}
+
+.crm-sidebar .brand-header .brand-badge {
+    background: #000000;
+    color: #ffffff;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--crm-radius-pill);
+    margin-left: 0.25rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
 }
 
 .sidebar-nav {
@@ -83,45 +104,51 @@ body {
 }
 
 .sidebar-category {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #94a3b8;
-    padding: 0.85rem 0.75rem 0.35rem 0.75rem;
+    color: var(--crm-text-muted);
+    padding: 0.9rem 0.85rem 0.35rem 0.85rem;
     font-weight: 700;
 }
 
 .sidebar-link {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.65rem 0.85rem;
-    color: #cbd5e1;
-    border-radius: 12px;
-    font-size: 0.92rem;
-    font-weight: 500;
+    gap: 0.85rem;
+    padding: 0.62rem 0.95rem;
+    color: #262626;
+    border-radius: var(--crm-radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.18s ease;
     margin-bottom: 3px;
 }
 
 .sidebar-link:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.08);
+    color: #000000;
+    background-color: #f5f5f5;
     transform: translateX(2px);
 }
 
 .sidebar-link.active {
-    color: #ffffff;
-    background: linear-gradient(90deg, #2563eb, #3b82f6);
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    color: #ffffff !important;
+    background: #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
     font-weight: 600;
+}
+
+.sidebar-link.active i {
+    color: #ffffff !important;
 }
 
 .sidebar-link i {
     font-size: 1.15rem;
     width: 22px;
     text-align: center;
+    color: #262626;
+    transition: color 0.18s ease;
 }
 
 /* Main Content Area */
@@ -141,17 +168,17 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
-/* Metric / KPI Cards */
+/* Metric / KPI Cards with Instagram Curved Aesthetic */
 .kpi-card {
     background: #ffffff;
     border: 1px solid var(--crm-border);
-    border-radius: 16px;
+    border-radius: var(--crm-radius-lg);
     padding: 1.35rem;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: var(--crm-shadow);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--crm-shadow-sm);
     position: relative;
     overflow: hidden;
     height: 100%;
@@ -160,41 +187,42 @@ body {
 .kpi-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--crm-shadow-hover);
+    border-color: var(--crm-border-strong);
 }
 
 .kpi-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
+    width: 46px;
+    height: 46px;
+    border-radius: var(--crm-radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
 }
 
 .kpi-value {
     font-size: 1.85rem;
-    font-weight: 700;
-    color: var(--crm-dark);
+    font-weight: 800;
+    color: var(--crm-text-main);
     margin-top: 0.25rem;
     margin-bottom: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
 }
 
 .kpi-label {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.74rem;
+    font-weight: 700;
     color: var(--crm-text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
 }
 
 /* Cards & Containers */
 .crm-card {
     background: #ffffff;
     border: 1px solid var(--crm-border);
-    border-radius: 16px;
-    box-shadow: var(--crm-shadow);
+    border-radius: var(--crm-radius-lg);
+    box-shadow: var(--crm-shadow-sm);
     margin-bottom: 1.5rem;
     overflow: hidden;
 }
@@ -211,22 +239,23 @@ body {
 .crm-card-title {
     font-size: 1.05rem;
     font-weight: 700;
-    color: var(--crm-dark);
+    color: var(--crm-text-main);
     margin: 0;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
 }
 
 .crm-card-body {
     padding: 1.35rem;
 }
 
-/* Instagram-inspired rounded buttons & controls */
+/* Instagram-Inspired Black Buttons with White Text & Curved Corners */
 .btn {
-    border-radius: 9999px;
+    border-radius: var(--crm-radius-pill);
     font-weight: 600;
     font-size: 0.88rem;
-    padding: 0.5rem 1.25rem;
-    transition: all 0.2s ease;
+    padding: 0.52rem 1.25rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.01em;
 }
 
 .btn-sm {
@@ -234,37 +263,153 @@ body {
     font-size: 0.82rem;
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #2563eb, #3b82f6);
-    border: none;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+.btn-lg {
+    padding: 0.75rem 1.75rem;
+    font-size: 1rem;
 }
 
-.btn-primary:hover {
-    background: linear-gradient(135deg, #1d4ed8, #2563eb);
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+/* Primary Button: Solid Black with Pure White Text */
+.btn-primary, 
+.btn-dark {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: 1px solid #000000 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary:hover, 
+.btn-dark:hover,
+.btn-primary:focus,
+.btn-dark:focus {
+    background-color: var(--crm-black-hover) !important;
+    color: #ffffff !important;
+    border-color: var(--crm-black-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:active, 
+.btn-dark:active {
+    background-color: var(--crm-black-active) !important;
+    transform: translateY(0);
+}
+
+/* Outline Buttons: Clean Dark Border, Inverts to Black on Hover */
+.btn-outline-primary,
+.btn-outline-dark {
+    color: #000000 !important;
+    background-color: transparent !important;
+    border: 1.5px solid #000000 !important;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-dark:hover {
+    color: #ffffff !important;
+    background-color: #000000 !important;
+    border-color: #000000 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Secondary Button: Soft Light Gray with Dark Text */
+.btn-secondary,
+.btn-light {
+    background-color: #efefef !important;
+    color: #000000 !important;
+    border: 1px solid var(--crm-border-strong) !important;
+}
+
+.btn-secondary:hover,
+.btn-light:hover {
+    background-color: #e5e5e5 !important;
+    color: #000000 !important;
+    border-color: #cccccc !important;
+}
+
+.btn-outline-secondary {
+    border: 1px solid var(--crm-border-strong) !important;
+    color: #262626 !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f5f5f5 !important;
+    color: #000000 !important;
+    border-color: #a8a8a8 !important;
+}
+
+/* Danger Button: Instagram Coral-Red */
+.btn-danger {
+    background-color: var(--crm-danger) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--crm-danger) !important;
+    box-shadow: 0 2px 6px rgba(237, 73, 86, 0.25);
+}
+
+.btn-danger:hover {
+    background-color: #d93946 !important;
+    border-color: #d93946 !important;
+    color: #ffffff !important;
     transform: translateY(-1px);
 }
 
+.btn-outline-danger {
+    color: var(--crm-danger) !important;
+    border: 1px solid var(--crm-danger) !important;
+    background-color: transparent !important;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--crm-danger) !important;
+    color: #ffffff !important;
+}
+
+/* Form Controls with Curved Corners */
 .form-control, .form-select {
-    border-radius: 12px;
-    border: 1px solid var(--crm-border);
-    padding: 0.55rem 0.85rem;
+    border-radius: var(--crm-radius-md);
+    border: 1px solid var(--crm-border-strong);
+    padding: 0.58rem 0.95rem;
     font-size: 0.92rem;
+    background-color: #ffffff;
     transition: all 0.2s ease;
 }
 
 .form-control:focus, .form-select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    outline: none;
 }
 
-/* Status Badges */
-.badge-status {
+.input-group-text {
+    border-radius: var(--crm-radius-md);
+    border: 1px solid var(--crm-border-strong);
+    background-color: #fafafa;
+    color: var(--crm-text-secondary);
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > :not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Status Badges with Pill Curved Corners */
+.badge {
+    border-radius: var(--crm-radius-pill);
+    font-weight: 600;
     padding: 0.35em 0.8em;
+    letter-spacing: 0.02em;
+}
+
+.badge-status {
+    padding: 0.35em 0.85em;
     font-weight: 600;
     font-size: 0.75rem;
-    border-radius: 9999px;
+    border-radius: var(--crm-radius-pill);
     letter-spacing: 0.02em;
 }
 
@@ -272,36 +417,136 @@ body {
     background-color: #8b5cf6 !important;
 }
 
+/* Instagram Story Ring & Accent Styling */
+.ig-gradient-text {
+    background: var(--crm-ig-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ig-avatar-ring {
+    background: var(--crm-ig-gradient);
+    padding: 2px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ig-avatar-inner {
+    background: #ffffff;
+    border-radius: 50%;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Quick Test Account Chip */
 .quick-login-chip {
     cursor: pointer;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 0.6rem 0.9rem;
-    background: #f8fafc;
-    transition: all 0.2s ease;
+    border: 1px solid var(--crm-border);
+    border-radius: var(--crm-radius-md);
+    padding: 0.65rem 0.95rem;
+    background: #ffffff;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: inline-block;
     font-size: 0.85rem;
 }
 
 .quick-login-chip:hover {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
+    background: #f8fafc;
+    border-color: var(--crm-border-strong);
     transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
-/* Tables */
+/* Tables with Minimalist Clean Aesthetic */
+.table {
+    margin-bottom: 0;
+}
+
 .table th {
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
     padding: 0.85rem 1rem;
+    color: var(--crm-text-secondary);
+    font-weight: 700;
+    border-bottom: 1px solid var(--crm-border);
+    background-color: #fafafa;
 }
 
 .table td {
     padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--crm-border);
+    vertical-align: middle;
 }
 
-/* Responsive adjustment */
+.table-hover tbody tr:hover {
+    background-color: #fcfcfc;
+}
+
+/* Pagination: Curved Pill Style */
+.pagination {
+    gap: 4px;
+}
+
+.page-item .page-link {
+    border-radius: var(--crm-radius-pill) !important;
+    border: 1px solid var(--crm-border);
+    color: var(--crm-text-main);
+    font-weight: 600;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    transition: all 0.18s ease;
+}
+
+.page-item .page-link:hover {
+    background-color: #f5f5f5;
+    border-color: var(--crm-border-strong);
+    color: #000000;
+}
+
+.page-item.active .page-link {
+    background-color: #000000;
+    border-color: #000000;
+    color: #ffffff;
+}
+
+.page-item.disabled .page-link {
+    color: var(--crm-text-muted);
+    border-color: var(--crm-border);
+    background-color: #fafafa;
+}
+
+/* Dropdowns & Modals */
+.dropdown-menu {
+    border-radius: var(--crm-radius-lg);
+    border: 1px solid var(--crm-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: var(--crm-radius-sm);
+    font-weight: 500;
+    font-size: 0.88rem;
+    padding: 0.55rem 0.95rem;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f5f5;
+    color: #000000;
+}
+
+/* Alert Boxes with Curved Corners */
+.alert {
+    border-radius: var(--crm-radius-md);
+    border: 1px solid var(--crm-border);
+    font-size: 0.9rem;
+}
+
+/* Responsive adjustment for Mobile & Tablet */
 @media (max-width: 991.98px) {
     .crm-sidebar {
         position: fixed;
@@ -309,6 +554,7 @@ body {
         top: 0;
         bottom: 0;
         z-index: 1040;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
     }
     .crm-sidebar.show {
         left: 0;

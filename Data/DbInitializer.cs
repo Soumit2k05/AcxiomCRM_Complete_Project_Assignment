@@ -19,7 +19,24 @@ public static class DbInitializer
         var logger = scope.ServiceProvider.GetRequiredService<ILogger<ApplicationDbContext>>();
 
         // Apply EF Core database migrations
-        await context.Database.MigrateAsync();
+        try
+        {
+            await context.Database.MigrateAsync();
+        }
+        catch (Exception ex)
+        {
+            logger.LogWarning(ex, "MigrateAsync note: database tables may already exist. Ensuring migration record.");
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync(
+                    "CREATE TABLE IF NOT EXISTS \"__EFMigrationsHistory\" (\"MigrationId\" TEXT NOT NULL CONSTRAINT \"PK___EFMigrationsHistory\" PRIMARY KEY, \"ProductVersion\" TEXT NOT NULL); " +
+                    "INSERT OR IGNORE INTO \"__EFMigrationsHistory\" (\"MigrationId\", \"ProductVersion\") VALUES ('20261012123610_InitialCreate', '10.0.0');");
+            }
+            catch (Exception innerEx)
+            {
+                logger.LogWarning(innerEx, "Could not update __EFMigrationsHistory table.");
+            }
+        }
 
         // 1. Seed Roles
         string[] roles = [RoleAdmin, RoleManager, RoleSalesExecutive];

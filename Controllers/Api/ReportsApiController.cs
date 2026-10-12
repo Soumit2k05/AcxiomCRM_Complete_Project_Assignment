@@ -9,6 +9,7 @@ namespace AcxiomCRM.Controllers.Api;
 [ApiController]
 [Route("api/reports")]
 [Authorize]
+[IgnoreAntiforgeryToken]
 public class ReportsApiController : ControllerBase
 {
     private readonly ApplicationDbContext _context;

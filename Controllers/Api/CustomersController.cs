@@ -11,6 +11,7 @@ namespace AcxiomCRM.Controllers.Api;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
+[IgnoreAntiforgeryToken]
 public class CustomersController : ControllerBase
 {
     private readonly ApplicationDbContext _context;

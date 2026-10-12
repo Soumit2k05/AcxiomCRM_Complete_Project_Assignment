@@ -9,6 +9,7 @@ namespace AcxiomCRM.Controllers.Api;
 
 [ApiController]
 [Route("api/[controller]")]
+[IgnoreAntiforgeryToken]
 public class AuthController : ControllerBase
 {
     private readonly SignInManager<ApplicationUser> _signInManager;

@@ -20,10 +20,10 @@
             <aside class="crm-sidebar" id="sidebarMenu">
                 <a asp-controller="Home" asp-action="Index" class="brand-header">
                     <div class="brand-icon">
-                        <i class="bi bi-diagram-3-fill"></i>
+                        <i class="bi bi-grid-fill"></i>
                     </div>
-                    <div>
-                        <span>Acxiom</span><span class="text-primary">CRM</span>
+                    <div class="d-flex align-items-center">
+                        <span class="text-dark">Acxiom</span><span class="brand-badge">CRM</span>
                     </div>
                 </a>
 
@@ -38,38 +38,38 @@
                     <div class="sidebar-category">Core CRM</div>
                     <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customers" ? "active" : "")" 
                        asp-controller="Customers" asp-action="Index">
-                        <i class="bi bi-people-fill text-primary"></i>
+                        <i class="bi bi-people"></i>
                         <span>Customers</span>
                     </a>
                     <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Leads" ? "active" : "")" 
                        asp-controller="Leads" asp-action="Index">
-                        <i class="bi bi-funnel-fill text-info"></i>
+                        <i class="bi bi-funnel"></i>
                         <span>Leads</span>
                     </a>
                     <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Opportunities" ? "active" : "")" 
                        asp-controller="Opportunities" asp-action="Index">
-                        <i class="bi bi-briefcase-fill text-warning"></i>
+                        <i class="bi bi-briefcase"></i>
                         <span>Opportunities</span>
                     </a>
                     <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "FollowUps" ? "active" : "")" 
                        asp-controller="FollowUps" asp-action="Index">
-                        <i class="bi bi-calendar-check-fill text-success"></i>
+                        <i class="bi bi-calendar-check"></i>
                         <span>Follow-Ups</span>
                     </a>
                     <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Activities" ? "active" : "")" 
                        asp-controller="Activities" asp-action="Index">
-                        <i class="bi bi-activity text-danger"></i>
+                        <i class="bi bi-activity"></i>
                         <span>Activities</span>
                     </a>
 
                     <div class="sidebar-category">Reports &amp; APIs</div>
                     <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? "active" : "")" 
                        asp-controller="Reports" asp-action="Index">
-                        <i class="bi bi-graph-up-arrow text-primary"></i>
+                        <i class="bi bi-graph-up-arrow"></i>
                         <span>Reports Hub</span>
                     </a>
                     <a class="sidebar-link" href="/api/customers" target="_blank">
-                        <i class="bi bi-cpu-fill text-secondary"></i>
+                        <i class="bi bi-code-slash"></i>
                         <span>REST API (/api)</span>
                     </a>
 
@@ -80,26 +80,26 @@
                         {
                             <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Users" ? "active" : "")" 
                                asp-controller="Users" asp-action="Index">
-                                <i class="bi bi-shield-lock-fill text-danger"></i>
+                                <i class="bi bi-shield-lock"></i>
                                 <span>User Management</span>
                             </a>
                         }
                         <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "AuditLogs" ? "active" : "")" 
                            asp-controller="AuditLogs" asp-action="Index">
-                            <i class="bi bi-journal-text text-warning"></i>
+                            <i class="bi bi-journal-text"></i>
                             <span>Audit Logs</span>
                         </a>
                     }
                 </nav>
 
-                <div class="p-3 border-top border-secondary border-opacity-25 mt-auto">
-                    <div class="d-flex align-items-center gap-2">
-                        <div class="badge bg-primary bg-opacity-25 text-primary p-2 rounded">
+                <div class="p-3 border-top mt-auto" style="border-color: var(--crm-border) !important;">
+                    <div class="d-flex align-items-center gap-2 p-2 rounded-3 bg-light">
+                        <div class="badge bg-dark text-white p-2 rounded-circle">
                             <i class="bi bi-shield-check"></i>
                         </div>
                         <div class="small">
-                            <div class="text-white fw-semibold">Secured Session</div>
-                            <div class="text-secondary" style="font-size: 0.75rem;">Anti-Forgery & Lockout</div>
+                            <div class="text-dark fw-semibold" style="font-size: 0.8rem;">Secured Enterprise</div>
+                            <div class="text-muted" style="font-size: 0.72rem;">Anti-Forgery &amp; Lockout</div>
                         </div>
                     </div>
                 </div>
@@ -113,17 +113,17 @@
                 <div class="d-flex align-items-center gap-3">
                     @if (User.Identity?.IsAuthenticated == true)
                     {
-                        <button class="btn btn-outline-secondary btn-sm d-lg-none" type="button" id="sidebarToggle" aria-label="Toggle Navigation">
+                        <button class="btn btn-outline-secondary btn-sm d-lg-none rounded-pill" type="button" id="sidebarToggle" aria-label="Toggle Navigation">
                             <i class="bi bi-list fs-5"></i>
                         </button>
                     }
                     else
                     {
                         <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 text-decoration-none">
-                            <div class="brand-icon text-primary fs-4">
-                                <i class="bi bi-diagram-3-fill"></i>
+                            <div class="brand-icon d-flex align-items-center justify-content-center text-white" style="width: 32px; height: 32px; background: var(--crm-ig-gradient); border-radius: 10px;">
+                                <i class="bi bi-grid-fill fs-6"></i>
                             </div>
-                            <span class="fs-5 fw-bold text-dark">Acxiom<span class="text-primary">CRM</span></span>
+                            <span class="fs-5 fw-bold text-dark">Acxiom<span class="badge bg-dark text-white ms-1" style="font-size: 0.65rem;">CRM</span></span>
                         </a>
                     }
                     <span class="text-muted small d-none d-md-inline">

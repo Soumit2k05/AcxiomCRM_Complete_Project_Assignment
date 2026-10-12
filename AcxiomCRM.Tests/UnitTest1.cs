@@ -145,4 +145,37 @@ public class BusinessRuleValidationTests
         Assert.NotNull(errorMessage);
         Assert.Contains("converted lead is finalized", errorMessage);
     }
+
+    [Fact]
+    public void RoleConstants_AreAccuratelyConfigured()
+    {
+        Assert.Equal("Admin", AcxiomCRM.Data.DbInitializer.RoleAdmin);
+        Assert.Equal("Manager", AcxiomCRM.Data.DbInitializer.RoleManager);
+        Assert.Equal("SalesExecutive", AcxiomCRM.Data.DbInitializer.RoleSalesExecutive);
+    }
+
+    [Fact]
+    public void ApiResponse_ProducesValidPayload()
+    {
+        var response = AcxiomCRM.DTOs.ApiResponse<string>.Ok("TestData", "Operation Successful");
+
+        Assert.True(response.Success);
+        Assert.Equal("TestData", response.Data);
+        Assert.Equal("Operation Successful", response.Message);
+        Assert.Null(response.Errors);
+    }
+
+    [Fact]
+    public void CustomerEntity_Instantiation_HasDefaultActiveStatus()
+    {
+        var customer = new Customer
+        {
+            CustomerName = "Acxiom Test Corp",
+            Email = "corp@acxiom.local",
+            Phone = "9876543210"
+        };
+
+        Assert.Equal("Active", customer.Status);
+        Assert.True(customer.CreatedDate <= DateTime.UtcNow);
+    }
 }

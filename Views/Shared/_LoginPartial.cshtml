@@ -17,9 +17,13 @@
             </span>
         </div>
         <div class="dropdown">
-            <button class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center shadow-sm" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px;">
-                <i class="bi bi-person-circle fs-5 text-secondary"></i>
-            </button>
+            <div class="ig-avatar-ring cursor-pointer" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+                <div class="ig-avatar-inner">
+                    <div class="rounded-circle bg-light text-dark d-flex align-items-center justify-content-center" style="width: 34px; height: 34px;">
+                        <i class="bi bi-person-fill fs-5"></i>
+                    </div>
+                </div>
+            </div>
             <ul class="dropdown-menu dropdown-menu-end shadow border-0" aria-labelledby="userMenuButton">
                 <li class="px-3 py-2 border-bottom">
                     <div class="fw-bold">@displayName</div>
@@ -27,12 +31,12 @@
                 </li>
                 <li>
                     <a class="dropdown-item py-2" asp-controller="Home" asp-action="Index">
-                        <i class="bi bi-speedometer2 me-2 text-primary"></i> Dashboard
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item py-2" href="/api/customers" target="_blank">
-                        <i class="bi bi-code-square me-2 text-info"></i> REST API (/api/customers)
+                        <i class="bi bi-code-slash me-2"></i> REST API (/api/customers)
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
@@ -50,10 +54,10 @@
 else
 {
     <div class="d-flex align-items-center gap-2">
-        <a class="btn btn-outline-primary btn-sm px-3" asp-controller="Account" asp-action="Login">
+        <a class="btn btn-outline-dark btn-sm px-3 rounded-pill" asp-controller="Account" asp-action="Login">
             <i class="bi bi-box-arrow-in-right me-1"></i> Sign In
         </a>
-        <a class="btn btn-primary btn-sm px-3" asp-controller="Account" asp-action="Register">
+        <a class="btn btn-primary btn-sm px-3 rounded-pill" asp-controller="Account" asp-action="Register">
             <i class="bi bi-person-plus me-1"></i> Register
         </a>
     </div>

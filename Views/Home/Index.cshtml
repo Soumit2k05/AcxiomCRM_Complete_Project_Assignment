@@ -333,7 +333,7 @@
                     labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LeadStatusBreakdown.Keys)),
                     datasets: [{
                         data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.LeadStatusBreakdown.Values)),
-                        backgroundColor: ['#3b82f6', '#06b6d4', '#10b981', '#ef4444', '#8b5cf6'],
+                        backgroundColor: ['#000000', '#e1306c', '#fd1d1d', '#f77737', '#10b981'],
                         borderWidth: 2,
                         borderColor: '#ffffff'
                     }]
@@ -358,8 +358,8 @@
                     datasets: [{
                         label: 'Amount (₹)',
                         data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.PipelineStageBreakdown.Values)),
-                        backgroundColor: '#3b82f6',
-                        borderRadius: 6
+                        backgroundColor: '#000000',
+                        borderRadius: 8
                     }]
                 },
                 options: {
@@ -390,11 +390,11 @@
                     datasets: [{
                         label: 'Outcome (₹)',
                         data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MonthlySalesOutcome.Values)),
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderColor: '#000000',
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
                         fill: true,
                         tension: 0.35,
-                        pointBackgroundColor: '#10b981',
+                        pointBackgroundColor: '#000000',
                         pointRadius: 4
                     }]
                 },

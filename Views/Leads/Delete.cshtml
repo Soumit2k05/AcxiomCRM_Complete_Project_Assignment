@@ -1,0 +1,43 @@
+@model AcxiomCRM.Models.Lead
+@{
+    ViewData["Title"] = "Delete Lead";
+}
+
+<div class="row justify-content-center py-4">
+    <div class="col-12 col-md-7 col-lg-6">
+        <div class="crm-card border-danger border-opacity-25 shadow-sm">
+            <div class="crm-card-header bg-danger bg-opacity-10 py-3 text-danger">
+                <h5 class="crm-card-title text-danger mb-0">
+                    <i class="bi bi-trash-fill me-2"></i> Confirm Lead Deletion
+                </h5>
+            </div>
+            <div class="crm-card-body p-4">
+                <p class="text-secondary">
+                    Are you sure you want to permanently delete lead <strong>@Model.LeadName</strong> (<span class="font-monospace">@Model.LeadCode</span>)?
+                    This action will be recorded in the security audit trail.
+                </p>
+
+                <div class="p-3 bg-light rounded mb-4 small">
+                    <div class="row g-2">
+                        <div class="col-4 text-muted">Company:</div>
+                        <div class="col-8 fw-semibold">@(Model.CompanyName ?? "N/A")</div>
+                        <div class="col-4 text-muted">Status:</div>
+                        <div class="col-8 fw-semibold">@Model.Status</div>
+                        <div class="col-4 text-muted">Expected:</div>
+                        <div class="col-8 fw-semibold">₹@Model.ExpectedValue.ToString("N0")</div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post" id="deleteLeadForm">
+                    <input type="hidden" asp-for="LeadId" />
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger px-4 fw-semibold shadow-sm">
+                            <i class="bi bi-trash me-1"></i> Yes, Delete Lead
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

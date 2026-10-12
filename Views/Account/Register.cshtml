@@ -1,0 +1,84 @@
+@model AcxiomCRM.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register Account";
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center align-items-center py-4">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="crm-card shadow-sm border-0">
+            <div class="crm-card-header bg-white border-bottom py-3 text-center d-block">
+                <div class="brand-icon mx-auto mb-2 text-primary fs-3">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <h4 class="fw-bold mb-1">Create CRM Account</h4>
+                <p class="text-muted small mb-0">Join your organization's sales & management team</p>
+            </div>
+            <div class="crm-card-body p-4">
+                <form asp-controller="Account" asp-action="Register" method="post" id="registerForm">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 small" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label small fw-semibold text-secondary"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person"></i></span>
+                            <input asp-for="FullName" class="form-control" placeholder="e.g. John Doe" />
+                        </div>
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label small fw-semibold text-secondary"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-envelope"></i></span>
+                            <input asp-for="Email" class="form-control" placeholder="name@company.com" autocomplete="username" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Role" class="form-label small fw-semibold text-secondary"></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-shield-check"></i></span>
+                            <select asp-for="Role" class="form-select">
+                                <option value="SalesExecutive">Sales Executive</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Admin">Admin</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Role" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-md-6">
+                            <label asp-for="Password" class="form-label small fw-semibold text-secondary"></label>
+                            <input asp-for="Password" class="form-control" placeholder="••••••••" autocomplete="new-password" />
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label asp-for="ConfirmPassword" class="form-label small fw-semibold text-secondary"></label>
+                            <input asp-for="ConfirmPassword" class="form-control" placeholder="••••••••" autocomplete="new-password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="small text-muted mb-3">
+                        <i class="bi bi-info-circle me-1"></i> Passwords must be at least 8 characters and include uppercase, lowercase, numbers, and special characters.
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold shadow-sm mb-3">
+                        <i class="bi bi-person-check me-1"></i> Register &amp; Continue
+                    </button>
+
+                    <div class="text-center small text-muted">
+                        Already have an account? <a asp-controller="Account" asp-action="Login" class="text-primary text-decoration-none fw-semibold">Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

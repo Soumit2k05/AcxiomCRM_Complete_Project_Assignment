@@ -1,0 +1,31 @@
+@model AcxiomCRM.Models.FollowUp
+@{
+    ViewData["Title"] = "Cancel Follow-Up";
+}
+
+<div class="row justify-content-center py-4">
+    <div class="col-12 col-md-7 col-lg-6">
+        <div class="crm-card border-danger border-opacity-25 shadow-sm">
+            <div class="crm-card-header bg-danger bg-opacity-10 py-3 text-danger">
+                <h5 class="crm-card-title text-danger mb-0">
+                    <i class="bi bi-trash-fill me-2"></i> Delete Follow-Up Activity
+                </h5>
+            </div>
+            <div class="crm-card-body p-4">
+                <p class="text-secondary">
+                    Are you sure you want to remove follow-up item <strong>@Model.Subject</strong> scheduled for @Model.FollowUpDate.ToString("yyyy-MM-dd HH:mm")?
+                </p>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="FollowUpId" />
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-3">Cancel</a>
+                        <button type="submit" class="btn btn-danger rounded-pill px-4 fw-semibold shadow-sm">
+                            <i class="bi bi-trash me-1"></i> Yes, Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

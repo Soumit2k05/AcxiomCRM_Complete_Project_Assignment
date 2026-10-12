@@ -1,0 +1,90 @@
+@model IEnumerable<AcxiomCRM.Models.Opportunity>
+@{
+    ViewData["Title"] = "Pipeline Report";
+    var totalPipeline = Model.Sum(o => o.Amount);
+    var weightedPipeline = Model.Sum(o => o.WeightedPipeline);
+}
+
+<div class="container-fluid px-0">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+        <div>
+            <h1 class="h3 fw-bold text-dark mb-1">
+                <i class="bi bi-bar-chart-line-fill text-warning me-2"></i> Pipeline &amp; Revenue Report
+            </h1>
+            <p class="text-muted mb-0 small">
+                Stage-wise breakdown and closure probability valuation.
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-action="PipelineReport" asp-route-export="csv" class="btn btn-outline-success rounded-pill btn-sm px-3">
+                <i class="bi bi-file-earmark-excel me-1"></i> Export to CSV
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+                <i class="bi bi-arrow-left me-1"></i> Hub
+            </a>
+        </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Pipeline Face Value</div>
+                <div class="kpi-value text-dark">₹@totalPipeline.ToString("N0")</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="kpi-card border-primary border-opacity-25 bg-light">
+                <div class="kpi-label text-primary">Weighted Expected Pipeline</div>
+                <div class="kpi-value text-primary">₹@weightedPipeline.ToString("N0")</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="kpi-card">
+                <div class="kpi-label">Total Deals Tracked</div>
+                <div class="kpi-value text-secondary">@Model.Count()</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunities Breakdown Table -->
+    <div class="crm-card">
+        <div class="crm-card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-muted small text-uppercase">
+                        <tr>
+                            <th>Deal</th>
+                            <th>Customer</th>
+                            <th>Stage</th>
+                            <th>Probability</th>
+                            <th class="text-end">Amount</th>
+                            <th class="text-end">Weighted</th>
+                            <th>Close Date</th>
+                            <th>Assignee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var o in Model)
+                        {
+                            <tr>
+                                <td class="fw-bold">@o.OpportunityName</td>
+                                <td class="small">@(o.Customer?.CustomerName ?? "Prospect")</td>
+                                <td>
+                                    <span class="badge rounded-pill @(o.Stage == "Won" ? "bg-success" : (o.Stage == "Lost" ? "bg-danger" : "bg-primary"))">
+                                        @o.Stage
+                                    </span>
+                                </td>
+                                <td>@o.Probability%</td>
+                                <td class="text-end fw-semibold">₹@o.Amount.ToString("N0")</td>
+                                <td class="text-end fw-bold text-primary">₹@o.WeightedPipeline.ToString("N0")</td>
+                                <td class="small text-muted">@o.ExpectedCloseDate.ToString("yyyy-MM-dd")</td>
+                                <td class="small text-muted">@(o.AssignedTo ?? "N/A")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

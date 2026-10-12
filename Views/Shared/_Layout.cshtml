@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AcxiomCRM</title>
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.min.css" />
+    <!-- Application CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AcxiomCRM.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <aside class="crm-sidebar" id="sidebarMenu">
+                <a asp-controller="Home" asp-action="Index" class="brand-header">
+                    <div class="brand-icon">
+                        <i class="bi bi-diagram-3-fill"></i>
+                    </div>
+                    <div>
+                        <span>Acxiom</span><span class="text-primary">CRM</span>
+                    </div>
+                </a>
+
+                <nav class="sidebar-nav">
+                    <div class="sidebar-category">Overview</div>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")" 
+                       asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <div class="sidebar-category">Core CRM</div>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Customers" ? "active" : "")" 
+                       asp-controller="Customers" asp-action="Index">
+                        <i class="bi bi-people-fill text-primary"></i>
+                        <span>Customers</span>
+                    </a>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Leads" ? "active" : "")" 
+                       asp-controller="Leads" asp-action="Index">
+                        <i class="bi bi-funnel-fill text-info"></i>
+                        <span>Leads</span>
+                    </a>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Opportunities" ? "active" : "")" 
+                       asp-controller="Opportunities" asp-action="Index">
+                        <i class="bi bi-briefcase-fill text-warning"></i>
+                        <span>Opportunities</span>
+                    </a>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "FollowUps" ? "active" : "")" 
+                       asp-controller="FollowUps" asp-action="Index">
+                        <i class="bi bi-calendar-check-fill text-success"></i>
+                        <span>Follow-Ups</span>
+                    </a>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Activities" ? "active" : "")" 
+                       asp-controller="Activities" asp-action="Index">
+                        <i class="bi bi-activity text-danger"></i>
+                        <span>Activities</span>
+                    </a>
+
+                    <div class="sidebar-category">Reports &amp; APIs</div>
+                    <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reports" ? "active" : "")" 
+                       asp-controller="Reports" asp-action="Index">
+                        <i class="bi bi-graph-up-arrow text-primary"></i>
+                        <span>Reports Hub</span>
+                    </a>
+                    <a class="sidebar-link" href="/api/customers" target="_blank">
+                        <i class="bi bi-cpu-fill text-secondary"></i>
+                        <span>REST API (/api)</span>
+                    </a>
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <div class="sidebar-category">Administration</div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Users" ? "active" : "")" 
+                               asp-controller="Users" asp-action="Index">
+                                <i class="bi bi-shield-lock-fill text-danger"></i>
+                                <span>User Management</span>
+                            </a>
+                        }
+                        <a class="sidebar-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "AuditLogs" ? "active" : "")" 
+                           asp-controller="AuditLogs" asp-action="Index">
+                            <i class="bi bi-journal-text text-warning"></i>
+                            <span>Audit Logs</span>
+                        </a>
+                    }
+                </nav>
+
+                <div class="p-3 border-top border-secondary border-opacity-25 mt-auto">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="badge bg-primary bg-opacity-25 text-primary p-2 rounded">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <div class="small">
+                            <div class="text-white fw-semibold">Secured Session</div>
+                            <div class="text-secondary" style="font-size: 0.75rem;">Anti-Forgery & Lockout</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        }
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Navbar -->
+            <header class="top-navbar">
+                <div class="d-flex align-items-center gap-3">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <button class="btn btn-outline-secondary btn-sm d-lg-none" type="button" id="sidebarToggle" aria-label="Toggle Navigation">
+                            <i class="bi bi-list fs-5"></i>
+                        </button>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 text-decoration-none">
+                            <div class="brand-icon text-primary fs-4">
+                                <i class="bi bi-diagram-3-fill"></i>
+                            </div>
+                            <span class="fs-5 fw-bold text-dark">Acxiom<span class="text-primary">CRM</span></span>
+                        </a>
+                    }
+                    <span class="text-muted small d-none d-md-inline">
+                        <i class="bi bi-building me-1"></i> Enterprise Customer Relationship Management
+                    </span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <partial name="_LoginPartial" />
+                </div>
+            </header>
+
+            <!-- Page Body -->
+            <main role="main" class="p-3 p-md-4 flex-grow-1">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                @RenderBody()
+            </main>
+
+            <!-- Footer -->
+            <footer class="footer bg-white border-top text-muted small py-3 px-4 d-flex justify-content-between align-items-center">
+                <div>
+                    &copy; @DateTime.UtcNow.Year AcxiomCRM Platform. Built with ASP.NET Core &amp; EF Core.
+                </div>
+                <div>
+                    <span class="badge bg-light text-dark border">
+                        <i class="bi bi-shield-shaded text-success me-1"></i> Identity Lockout &amp; Password Policy Active
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/chart.umd.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // Sidebar toggle for mobile/tablet
+        document.getElementById('sidebarToggle')?.addEventListener('click', function() {
+            document.getElementById('sidebarMenu')?.classList.toggle('show');
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

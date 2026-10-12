@@ -1,0 +1,43 @@
+@model AcxiomCRM.Models.Customer
+@{
+    ViewData["Title"] = "Deactivate Customer";
+}
+
+<div class="row justify-content-center py-4">
+    <div class="col-12 col-md-7 col-lg-6">
+        <div class="crm-card border-danger border-opacity-25 shadow-sm">
+            <div class="crm-card-header bg-danger bg-opacity-10 py-3 text-danger">
+                <h5 class="crm-card-title text-danger mb-0">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i> Confirm Customer Deactivation
+                </h5>
+            </div>
+            <div class="crm-card-body p-4">
+                <p class="text-secondary">
+                    Are you sure you want to deactivate customer <strong>@Model.CustomerName</strong> (<span class="font-monospace">@Model.CustomerCode</span>)?
+                    This will change their status to Inactive and record an audit log event.
+                </p>
+
+                <div class="p-3 bg-light rounded mb-4 small">
+                    <div class="row g-2">
+                        <div class="col-4 text-muted">Email:</div>
+                        <div class="col-8 fw-semibold">@Model.Email</div>
+                        <div class="col-4 text-muted">Phone:</div>
+                        <div class="col-8 fw-semibold">@Model.Phone</div>
+                        <div class="col-4 text-muted">Assigned To:</div>
+                        <div class="col-8 fw-semibold">@(Model.OwnerId ?? "Unassigned")</div>
+                    </div>
+                </div>
+
+                <form asp-action="Delete" method="post" id="deleteCustomerForm">
+                    <input type="hidden" asp-for="CustomerId" />
+                    <div class="d-flex justify-content-end gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-danger px-4 fw-semibold shadow-sm">
+                            <i class="bi bi-trash me-1"></i> Yes, Deactivate
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

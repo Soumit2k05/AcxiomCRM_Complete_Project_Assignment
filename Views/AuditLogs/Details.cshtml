@@ -1,0 +1,73 @@
+@model AcxiomCRM.Models.AuditLog
+@{
+    ViewData["Title"] = "Audit Entry #" + Model.AuditLogId;
+}
+
+<div class="row justify-content-center py-2">
+    <div class="col-12 col-lg-8">
+        <div class="crm-card">
+            <div class="crm-card-header">
+                <h4 class="crm-card-title"><i class="bi bi-shield-check text-warning me-2"></i> Audit Entry #@Model.AuditLogId</h4>
+                <a asp-action="Index" class="btn btn-outline-secondary rounded-pill btn-sm">Back to Audit Log</a>
+            </div>
+            <div class="crm-card-body p-4">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="text-muted small text-uppercase fw-semibold">Action Performed</div>
+                        <div class="fw-bold fs-5 text-dark">@Model.Action</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small text-uppercase fw-semibold">Timestamp (UTC)</div>
+                        <div class="fw-bold">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small text-uppercase fw-semibold">User Identity</div>
+                        <div class="fw-semibold text-primary">@(Model.UserId ?? "Anonymous")</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small text-uppercase fw-semibold">Origin IP Address</div>
+                        <div class="font-monospace">@(Model.IpAddress ?? "127.0.0.1")</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small text-uppercase fw-semibold">Target Entity / Module</div>
+                        <div><span class="badge bg-secondary">@Model.EntityName</span> (ID: @(Model.RecordId ?? "-"))</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-muted small text-uppercase fw-semibold">Result Status</div>
+                        <div><span class="badge @(Model.Result == "Success" ? "bg-success" : "bg-danger")">@Model.Result</span></div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary">Operation Description &amp; Details</label>
+                    <div class="p-3 bg-light rounded border small">
+                        @(Model.Details ?? "None specified.")
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Model.OldValue) || !string.IsNullOrEmpty(Model.NewValue))
+                {
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">Before State (Old Value)</label>
+                            <div class="p-3 bg-light rounded border text-muted small font-monospace">
+                                @(Model.OldValue ?? "(empty)")
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-semibold text-secondary">After State (New Value)</label>
+                            <div class="p-3 bg-light rounded border text-success small font-monospace">
+                                @(Model.NewValue ?? "(empty)")
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="border-top pt-3 d-flex justify-content-between align-items-center">
+                    <span class="small text-muted"><i class="bi bi-lock me-1"></i> Permanent cryptographic forensic record.</span>
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 btn-sm">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

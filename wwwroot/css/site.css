@@ -1,0 +1,316 @@
+:root {
+    --crm-primary: #3b82f6;
+    --crm-primary-hover: #2563eb;
+    --crm-primary-gradient: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
+    --crm-ig-gradient: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    --crm-accent: #6366f1;
+    --crm-dark: #0f172a;
+    --crm-dark-surface: #1e293b;
+    --crm-sidebar-width: 260px;
+    --crm-bg: #f8fafc;
+    --crm-card-bg: #ffffff;
+    --crm-border: #e2e8f0;
+    --crm-text-main: #0f172a;
+    --crm-text-muted: #64748b;
+    --crm-success: #10b981;
+    --crm-warning: #f59e0b;
+    --crm-danger: #ef4444;
+    --crm-info: #0ea5e9;
+    --crm-purple: #8b5cf6;
+    --crm-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+    --crm-shadow-hover: 0 12px 30px -4px rgba(15, 23, 42, 0.12);
+}
+
+body {
+    background-color: var(--crm-bg);
+    color: var(--crm-text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: -0.01em;
+}
+
+/* App Wrapper & Layout */
+.app-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Sidebar */
+.crm-sidebar {
+    width: var(--crm-sidebar-width);
+    background: #0f172a;
+    color: #f1f5f9;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1030;
+}
+
+.crm-sidebar .brand-header {
+    padding: 1.5rem 1.25rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+}
+
+.crm-sidebar .brand-header .brand-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--crm-primary-gradient);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+}
+
+.sidebar-nav {
+    padding: 1rem 0.75rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.sidebar-category {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    padding: 0.85rem 0.75rem 0.35rem 0.75rem;
+    font-weight: 700;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    color: #cbd5e1;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 3px;
+}
+
+.sidebar-link:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+    transform: translateX(2px);
+}
+
+.sidebar-link.active {
+    color: #ffffff;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    font-weight: 600;
+}
+
+.sidebar-link i {
+    font-size: 1.15rem;
+    width: 22px;
+    text-align: center;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background-color: var(--crm-bg);
+}
+
+/* Header Navbar */
+.top-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--crm-border);
+    padding: 0.85rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+/* Metric / KPI Cards */
+.kpi-card {
+    background: #ffffff;
+    border: 1px solid var(--crm-border);
+    border-radius: 16px;
+    padding: 1.35rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--crm-shadow);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--crm-shadow-hover);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.kpi-value {
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--crm-dark);
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    letter-spacing: -0.02em;
+}
+
+.kpi-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--crm-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Cards & Containers */
+.crm-card {
+    background: #ffffff;
+    border: 1px solid var(--crm-border);
+    border-radius: 16px;
+    box-shadow: var(--crm-shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.crm-card-header {
+    padding: 1.15rem 1.35rem;
+    border-bottom: 1px solid var(--crm-border);
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.crm-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--crm-dark);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.crm-card-body {
+    padding: 1.35rem;
+}
+
+/* Instagram-inspired rounded buttons & controls */
+.btn {
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s ease;
+}
+
+.btn-sm {
+    padding: 0.35rem 0.95rem;
+    font-size: 0.82rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    border: none;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 1px solid var(--crm-border);
+    padding: 0.55rem 0.85rem;
+    font-size: 0.92rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Status Badges */
+.badge-status {
+    padding: 0.35em 0.8em;
+    font-weight: 600;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
+}
+
+.bg-purple {
+    background-color: #8b5cf6 !important;
+}
+
+/* Quick Test Account Chip */
+.quick-login-chip {
+    cursor: pointer;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+    display: inline-block;
+    font-size: 0.85rem;
+}
+
+.quick-login-chip:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+/* Tables */
+.table th {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0.85rem 1rem;
+}
+
+.table td {
+    padding: 0.85rem 1rem;
+}
+
+/* Responsive adjustment */
+@media (max-width: 991.98px) {
+    .crm-sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        z-index: 1040;
+    }
+    .crm-sidebar.show {
+        left: 0;
+    }
+}

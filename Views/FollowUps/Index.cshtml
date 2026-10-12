@@ -1,0 +1,234 @@
+@model IEnumerable<AcxiomCRM.Models.FollowUp>
+@{
+    ViewData["Title"] = "Follow-Up Activities";
+    var currentTab = (ViewData["CurrentTab"] as string) ?? "All";
+    var currentSearch = ViewData["CurrentSearch"] as string;
+}
+
+<div class="container-fluid px-0">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+        <div>
+            <h1 class="h3 fw-bold text-dark mb-1">
+                <i class="bi bi-calendar-check-fill text-success me-2"></i> Follow-Up Management
+            </h1>
+            <p class="text-muted mb-0 small">
+                Schedule calls, client meetings, emails, and action items with deadline tracking and completion audits.
+            </p>
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-controller="Reports" asp-action="FollowUpReport" class="btn btn-outline-secondary rounded-pill btn-sm px-3">
+                <i class="bi bi-download me-1"></i> Follow-Up Report
+            </a>
+            <a asp-action="Schedule" class="btn btn-success rounded-pill btn-sm px-3 shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i> Schedule Follow-Up
+            </a>
+        </div>
+    </div>
+
+    <!-- Filter & Tabs -->
+    <div class="crm-card mb-4">
+        <div class="crm-card-body p-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <!-- Nav Tabs -->
+                <ul class="nav nav-pills gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill btn-sm @(currentTab == "All" ? "active" : "")" asp-action="Index" asp-route-statusTab="All">All Activities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill btn-sm @(currentTab == "Upcoming" ? "active bg-primary" : "")" asp-action="Index" asp-route-statusTab="Upcoming">Upcoming</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill btn-sm @(currentTab == "Overdue" ? "active bg-danger" : "")" asp-action="Index" asp-route-statusTab="Overdue">Overdue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill btn-sm @(currentTab == "Planned" ? "active bg-warning text-dark" : "")" asp-action="Index" asp-route-statusTab="Planned">Planned</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded-pill btn-sm @(currentTab == "Completed" ? "active bg-success" : "")" asp-action="Index" asp-route-statusTab="Completed">Completed</a>
+                    </li>
+                </ul>
+
+                <!-- Search -->
+                <form method="get" asp-action="Index" class="d-flex gap-2">
+                    <input type="hidden" name="statusTab" value="@currentTab" />
+                    <input type="text" name="search" class="form-control form-control-sm rounded-pill px-3" placeholder="Search subject..." value="@currentSearch" style="width: 220px;" />
+                    <button type="submit" class="btn btn-primary rounded-pill btn-sm px-3"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Follow-Ups List -->
+    <div class="crm-card">
+        <div class="crm-card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-muted small text-uppercase">
+                        <tr>
+                            <th>Type</th>
+                            <th>Subject &amp; Remarks</th>
+                            <th>Target Contact</th>
+                            <th>Follow-Up Date</th>
+                            <th>Status</th>
+                            <th>Assignee</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="7" class="text-center py-5 text-muted">
+                                    <i class="bi bi-calendar-x fs-2 d-block mb-2 text-secondary"></i>
+                                    No follow-ups found for this category.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                var isOverdue = item.Status == "Planned" && item.FollowUpDate < DateTime.UtcNow;
+                                <tr>
+                                    <td>
+                                        <span class="badge rounded-pill bg-light text-dark border">
+                                            @if (item.FollowUpType == "Call") { <i class="bi bi-telephone text-primary me-1"></i> }
+                                            else if (item.FollowUpType == "Meeting") { <i class="bi bi-people text-success me-1"></i> }
+                                            else if (item.FollowUpType == "Email") { <i class="bi bi-envelope text-info me-1"></i> }
+                                            else { <i class="bi bi-check2-square text-secondary me-1"></i> }
+                                            @item.FollowUpType
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="fw-bold text-dark">@item.Subject</div>
+                                        @if (!string.IsNullOrEmpty(item.Remarks))
+                                        {
+                                            <div class="small text-muted text-truncate" style="max-width: 320px;">@item.Remarks</div>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.Customer != null)
+                                        {
+                                            <a asp-controller="Customers" asp-action="Details" asp-route-id="@item.CustomerId" class="text-decoration-none small text-dark fw-semibold">
+                                                <i class="bi bi-building me-1 text-primary"></i>@item.Customer.CustomerName
+                                            </a>
+                                        }
+                                        else if (item.Lead != null)
+                                        {
+                                            <a asp-controller="Leads" asp-action="Details" asp-route-id="@item.LeadId" class="text-decoration-none small text-info">
+                                                <i class="bi bi-funnel me-1"></i>@item.Lead.LeadName
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <span class="small text-muted">N/A</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="small fw-semibold @(isOverdue ? "text-danger" : "text-dark")">
+                                            @item.FollowUpDate.ToString("yyyy-MM-dd")
+                                        </div>
+                                        <div class="small text-muted">@item.FollowUpDate.ToString("hh:mm tt")</div>
+                                    </td>
+                                    <td>
+                                        @if (isOverdue)
+                                        {
+                                            <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger border border-danger">Overdue</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge rounded-pill @(item.Status == "Completed" ? "bg-success bg-opacity-10 text-success border border-success" : "bg-warning bg-opacity-10 text-dark border border-warning")">
+                                                @item.Status
+                                            </span>
+                                        }
+                                    </td>
+                                    <td class="small text-muted">
+                                        @(item.AssignedTo ?? "Unassigned")
+                                    </td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex gap-1">
+                                            @if (item.Status == "Planned")
+                                            {
+                                                <!-- Complete Modal Trigger -->
+                                                <button type="button" class="btn btn-outline-success btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#completeModal_@item.FollowUpId" title="Mark Complete">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+
+                                                <!-- Reschedule Modal Trigger -->
+                                                <button type="button" class="btn btn-outline-warning btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#rescheduleModal_@item.FollowUpId" title="Reschedule">
+                                                    <i class="bi bi-calendar-event"></i>
+                                                </button>
+                                            }
+                                            <a asp-action="Delete" asp-route-id="@item.FollowUpId" class="btn btn-outline-danger btn-sm rounded-pill" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+
+                                        <!-- Complete Modal -->
+                                        <div class="modal fade" id="completeModal_@item.FollowUpId" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered text-start">
+                                                <div class="modal-content rounded-4 border-0 shadow">
+                                                    <div class="modal-header border-bottom">
+                                                        <h5 class="modal-title fw-bold">Complete Follow-Up</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form asp-action="Complete" method="post">
+                                                        <input type="hidden" name="id" value="@item.FollowUpId" />
+                                                        <div class="modal-body p-4">
+                                                            <div class="mb-3">
+                                                                <label class="form-label small fw-semibold text-secondary">Follow-Up Item</label>
+                                                                <input type="text" class="form-control" value="@item.Subject" readonly />
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label small fw-semibold text-secondary">Completion Remarks / Notes</label>
+                                                                <textarea name="completionRemarks" class="form-control" rows="3" placeholder="Call summary, meeting minutes, client feedback..."></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer border-top">
+                                                            <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-success rounded-pill btn-sm px-4 fw-semibold">Mark Completed</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Reschedule Modal -->
+                                        <div class="modal fade" id="rescheduleModal_@item.FollowUpId" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered text-start">
+                                                <div class="modal-content rounded-4 border-0 shadow">
+                                                    <div class="modal-header border-bottom">
+                                                        <h5 class="modal-title fw-bold">Reschedule Follow-Up</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <form asp-action="Reschedule" method="post">
+                                                        <input type="hidden" name="id" value="@item.FollowUpId" />
+                                                        <div class="modal-body p-4">
+                                                            <div class="mb-3">
+                                                                <label class="form-label small fw-semibold text-secondary">New Follow-Up Date &amp; Time *</label>
+                                                                <input type="datetime-local" name="newDate" class="form-control" value="@DateTime.UtcNow.AddDays(1).ToString("yyyy-MM-ddTHH:mm")" required />
+                                                                <div class="small text-muted mt-1">Cannot be earlier than today.</div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label small fw-semibold text-secondary">Rescheduling Reason</label>
+                                                                <input type="text" name="reason" class="form-control" placeholder="Client requested later time, etc." />
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer border-top">
+                                                            <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm px-3" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-warning rounded-pill btn-sm px-4 fw-semibold">Save New Date</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
